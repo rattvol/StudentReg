@@ -40,7 +40,7 @@ namespace StudentReg.Controllers
             student.MiddleName = MiddleName;
             student.SurName = SurName;
             _context.Students.Add(student);
-            _context.SaveChangesAsync();
+            _context.SaveChanges();
             return View("Index", GetStudWCourses());
         }
 
@@ -88,14 +88,11 @@ namespace StudentReg.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
-        public List<StudWithCourse> GetStudWCourses(string filter = "")
+        public List<StudWithCourse> GetStudWCourses()
         {
 
             List<StudWithCourse> studWithCourses = new List<StudWithCourse>();
-            //на случай необходимости фильтра на сервере
-            List<Students> swc = String.IsNullOrEmpty(filter) ? _context.Students
-                .Where(s => s.Name.Contains(filter) || s.Name.Contains(filter) || s.Name.Contains(filter))
-                .ToList() : _context.Students.ToList();
+            List<Students> swc = _context.Students.ToList();
             //создание экземпляра строки
             foreach (Students students in swc)
             {

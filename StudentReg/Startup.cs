@@ -18,7 +18,7 @@ namespace StudentReg
         public Startup(IConfiguration configuration)
         {
             var builder = new ConfigurationBuilder();
-            builder.AddJsonFile("appsettings.Development.json");
+            builder.AddJsonFile("appsettings.json");
             builder.AddEnvironmentVariables();
             builder.AddConfiguration(configuration);
             Configuration = configuration;
