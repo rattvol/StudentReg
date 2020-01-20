@@ -1,0 +1,27 @@
+﻿@model IEnumerable<StudentReg.sakila.Courses>
+
+<p >
+    Запись студента на курсы: @ViewData["StudentName"]
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.CourseName)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.CourseName)
+            </td>
+            <td>
+                <a asp-action="AddedToCourse" asp-route-id="@item.Idcourses" asp-route-studId ="@ViewData["StudentId"]">Добавить</a> |
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

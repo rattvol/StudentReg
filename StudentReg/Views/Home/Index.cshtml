@@ -1,0 +1,58 @@
+﻿@model IEnumerable<StudentReg.sakila.StudWithCourse>
+
+
+@{ViewData["Title"] = "Главная";}
+
+<p class="row">
+    <a class="col text-center" asp-action="AddStudent">Добавить студента</a>
+    <a class="col text-center" asp-action="AddCourse">Добавить курс</a>
+</p>
+<input class="form-control" id="SearchBox" placeholder="Поиск" onkeyup="tableSearch()" />
+<table class="table" id="Main_table">
+    <thead>
+        <tr>
+            <th scope="col">
+                Фамилия
+            </th>
+            <th scope="col">
+                Имя
+            </th>
+            <th scope="col">
+                Отчество
+            </th>
+            <th scope="col">
+                Назначенные курсы
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SurName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MiddleName)
+                </td>
+                <td>
+                    @foreach (var coursesIn in item.courses)
+                    {
+                        @coursesIn.CourseName
+                        <br />
+                    }
+                </td>
+                <td>
+                    <a asp-action="AddToCourse" asp-route-id=@item.IdStudents>Добавить на курс</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+@section Scripts {
+    <script src="~/js/JavaScript.js"></script>
+}
