@@ -2,15 +2,12 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
-namespace StudentReg.sakila
+namespace StudentReg.Models
 {
-    public partial class studentsregContext : DbContext
+    public partial class StudentsRegContext : DbContext
     {
-        //public studentsregContext()
-        //{
-        //}
 
-        public studentsregContext(DbContextOptions<studentsregContext> options)
+        public StudentsRegContext(DbContextOptions<StudentsRegContext> options)
             : base(options)
         {
         }
@@ -19,29 +16,24 @@ namespace StudentReg.sakila
         public virtual DbSet<Registration> Registration { get; set; }
         public virtual DbSet<Students> Students { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-//            if (!optionsBuilder.IsConfigured)
-//            {
-//#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-//                optionsBuilder.UseMySql("server=localhost;port=3306;user=professor;password=prof123;database=studentsreg", x => x.ServerVersion("8.0.18-mysql"));
-//            }
-        }
+        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        //{
+        //}
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Courses>(entity =>
             {
-                entity.HasKey(e => e.Idcourses)
+                entity.HasKey(e => e.CoursesID)
                     .HasName("PRIMARY");
 
                 entity.ToTable("courses");
 
-                entity.Property(e => e.Idcourses)
-                    .HasColumnName("idcourses")
+                entity.Property(e => e.CoursesID)
+                    .HasColumnName("CoursesID")
                     .HasColumnType("int(10)");
 
-                entity.Property(e => e.CourseName)
+                entity.Property(e => e.CoursesName)
                     .HasColumnType("varchar(45)")
                     .HasCharSet("utf8mb4")
                     .HasCollation("utf8mb4_0900_ai_ci");
@@ -55,37 +47,37 @@ namespace StudentReg.sakila
                     .HasColumnName("id")
                     .HasColumnType("int(10)");
 
-                entity.Property(e => e.CourseId)
-                    .HasColumnName("courseId")
+                entity.Property(e => e.CoursesId)
+                    .HasColumnName("CoursesId")
                     .HasColumnType("int(10)");
 
-                entity.Property(e => e.StudentId)
-                    .HasColumnName("studentId")
+                entity.Property(e => e.StudentsId)
+                    .HasColumnName("StudentsId")
                     .HasColumnType("int(10)");
             });
 
             modelBuilder.Entity<Students>(entity =>
             {
-                entity.HasKey(e => e.IdStudents)
+                entity.HasKey(e => e.StudentsId)
                     .HasName("PRIMARY");
 
                 entity.ToTable("students");
 
-                entity.Property(e => e.IdStudents)
-                    .HasColumnName("idStudents")
+                entity.Property(e => e.StudentsId)
+                    .HasColumnName("StudentsId")
                     .HasColumnType("int(10)");
 
-                entity.Property(e => e.MiddleName)
+                entity.Property(e => e.StudentsMiddleName)
                     .HasColumnType("varchar(45)")
                     .HasCharSet("utf8mb4")
                     .HasCollation("utf8mb4_0900_ai_ci");
 
-                entity.Property(e => e.Name)
+                entity.Property(e => e.StudentsName)
                     .HasColumnType("varchar(45)")
                     .HasCharSet("utf8mb4")
                     .HasCollation("utf8mb4_0900_ai_ci");
 
-                entity.Property(e => e.SurName)
+                entity.Property(e => e.StudentsSurName)
                     .HasColumnType("varchar(45)")
                     .HasCharSet("utf8mb4")
                     .HasCollation("utf8mb4_0900_ai_ci");

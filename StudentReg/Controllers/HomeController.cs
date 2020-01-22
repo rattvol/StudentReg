@@ -2,21 +2,21 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using StudentReg.Models;
-using StudentReg.sakila;
 
 namespace StudentReg.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly studentsregContext _context;
+        private readonly StudentsRegContext _context;
         private int StudentToCourseAdd { get; set; }
 
-        public HomeController(studentsregContext context, ILogger<HomeController> logger)
+        public HomeController(StudentsRegContext context, ILogger<HomeController> logger)
         {
             _context = context;
             _logger = logger;
@@ -36,12 +36,12 @@ namespace StudentReg.Controllers
         public IActionResult AddedStudent(string Name, string MiddleName, string SurName)//запись после добавления студента
         {
             Students student = new Students();
-            student.Name = Name;
-            student.MiddleName = MiddleName;
-            student.SurName = SurName;
+            student.StudentsName = Name;
+            student.StudentsMiddleName = MiddleName;
+            student.StudentsSurName = SurName;
             _context.Students.Add(student);
             _context.SaveChanges();
-            return View("Index", GetStudWCourses());
+            return View("Index");
         }
 
         public IActionResult AddCourse()
@@ -51,9 +51,9 @@ namespace StudentReg.Controllers
 
         public IActionResult AddedCourse(string CourseName)//запись в базу после добавления курса
         {
-            if (!_context.Courses.Any(a => a.CourseName==CourseName))
+            if (!_context.Courses.Any(a => a.CoursesName==CourseName))
             {
-                _context.Courses.Add(new Courses { CourseName = CourseName });
+                _context.Courses.Add(new Courses { CoursesName = CourseName });
                 _context.SaveChanges();
             }
             return View("Index", GetStudWCourses());
@@ -61,12 +61,12 @@ namespace StudentReg.Controllers
         [Route("AddToCourse")]
         public IActionResult AddToCourse(int id)
         {
-            Students studentName = _context.Students.Where(b => b.IdStudents == id).First();
-            ViewData["StudentName"] = studentName.Name + " " + studentName.MiddleName + " " + studentName.SurName;
-            ViewData["StudentId"] = studentName.IdStudents;
+            Students studentName = _context.Students.Where(b => b.StudentsId == id).First();
+            ViewData["StudentName"] = studentName.StudentsName + " " + studentName.StudentsMiddleName + " " + studentName.StudentsSurName;
+            ViewData["StudentId"] = studentName.StudentsId;
             List<Courses> courses = _context.Courses
                                             .Where(b => _context.Registration
-                                                                .Where(a => a.CourseId == b.Idcourses & a.StudentId == id)
+                                                                .Where(a => a.CoursesId == b.CoursesID & a.StudentsId == id)
                                                                 .Any() == false)
                                             .ToList();
             return View("AddToCourse", courses);
@@ -75,8 +75,8 @@ namespace StudentReg.Controllers
         public IActionResult AddedToCourse(int id, int studId)//запись в базу после регистрации на курсе
         {
             Registration reg = new Registration();
-            reg.StudentId = studId;
-            reg.CourseId = id;
+            reg.StudentsId = studId;
+            reg.CoursesId = id;
             _context.Registration.Add(reg);
             _context.SaveChanges();
             return View("Index", GetStudWCourses());
@@ -90,7 +90,6 @@ namespace StudentReg.Controllers
 
         public List<StudWithCourse> GetStudWCourses()
         {
-
             List<StudWithCourse> studWithCourses = new List<StudWithCourse>();
             List<Students> swc = _context.Students.ToList();
             //создание экземпляра строки
@@ -98,19 +97,19 @@ namespace StudentReg.Controllers
             {
                 studWithCourses.Add(new StudWithCourse
                 {
-                    IdStudents = students.IdStudents,
-                    Name = students.Name,
-                    MiddleName = students.MiddleName,
-                    SurName = students.SurName,
+                    IdStudents = students.StudentsId,
+                    Name = students.StudentsName,
+                    MiddleName = students.StudentsMiddleName,
+                    SurName = students.StudentsSurName,
                     //добавление перечня курсов
-                    courses = _context.Registration
-                .Where(a => a.StudentId == students.IdStudents)
+                    Courses = _context.Registration
+                .Where(a => a.StudentsId == students.StudentsId)
                 .Select(a => new Courses
                 {
-                    Idcourses = a.CourseId,
-                    CourseName = _context.Courses
-                                                    .Where(b => b.Idcourses == a.CourseId)
-                                                    .Select(b => b.CourseName).First()
+                    CoursesID = a.CoursesId,
+                    CoursesName = _context.Courses
+                                                    .Where(b => b.CoursesID == a.CoursesId)
+                                                    .Select(b => b.CoursesName).First()
                 }).ToList()
                 });
             }

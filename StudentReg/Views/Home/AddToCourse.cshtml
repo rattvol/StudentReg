@@ -1,4 +1,4 @@
-﻿@model IEnumerable<StudentReg.sakila.Courses>
+﻿@model IEnumerable<StudentReg.Models.Courses>
 
 <p >
     Запись студента на курсы: @ViewData["StudentName"]
@@ -7,7 +7,7 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.CourseName)
+                @Html.DisplayNameFor(model => model.CoursesName)
             </th>
             <th></th>
         </tr>
@@ -16,10 +16,10 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.CourseName)
+                @Html.DisplayFor(modelItem => item.CoursesName)
             </td>
             <td>
-                <a asp-action="AddedToCourse" asp-route-id="@item.Idcourses" asp-route-studId ="@ViewData["StudentId"]">Добавить</a> |
+                <a asp-action="AddedToCourse" asp-route-id="@item.CoursesID" asp-route-studId ="@ViewData["StudentId"]">Добавить</a> |
             </td>
         </tr>
 }

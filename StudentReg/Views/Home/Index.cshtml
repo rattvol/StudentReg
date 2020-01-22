@@ -1,4 +1,4 @@
-﻿@model IEnumerable<StudentReg.sakila.StudWithCourse>
+﻿@model IEnumerable<StudentReg.Models.StudWithCourse>
 
 
 @{ViewData["Title"] = "Главная";}
@@ -40,9 +40,9 @@
                     @Html.DisplayFor(modelItem => item.MiddleName)
                 </td>
                 <td>
-                    @foreach (var coursesIn in item.courses)
+                    @foreach (var coursesIn in item.Courses)
                     {
-                        @coursesIn.CourseName
+                        @coursesIn.CoursesName
                         <br />
                     }
                 </td>

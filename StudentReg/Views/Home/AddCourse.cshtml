@@ -1,4 +1,4 @@
-﻿@model StudentReg.sakila.Courses
+﻿@model StudentReg.Models.Courses
 
 <h4>Добавление курса</h4>
 <hr />
@@ -7,9 +7,9 @@
         <form asp-action="AddedCourse">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="CourseName"  class="control-label">Название курса</label>
-                <input asp-for="CourseName" required class="form-control" />
-                <span asp-validation-for="CourseName" class="text-danger"></span>
+                <label asp-for="CoursesName"  class="control-label">Название курса</label>
+                <input asp-for="CoursesName" required class="form-control" />
+                <span asp-validation-for="CoursesName" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Сохранить" class="btn btn-primary" />

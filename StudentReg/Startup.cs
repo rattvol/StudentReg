@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using StudentReg.sakila;
+using StudentReg.Models;
 
 namespace StudentReg
 {
@@ -31,7 +31,7 @@ namespace StudentReg
         {
             services.AddControllersWithViews();
             string connectionLine = Configuration.GetConnectionString("DefaultConnection");
-            services.AddDbContextPool<studentsregContext>(options => options
+            services.AddDbContextPool<StudentsRegContext>(options => options
                 // replace with your connection string
                 .UseMySql(connectionLine)
             );
