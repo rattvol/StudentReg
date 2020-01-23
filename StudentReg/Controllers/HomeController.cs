@@ -33,15 +33,15 @@ namespace StudentReg.Controllers
         }
 
         [Route("AddedStudent")]
-        public IActionResult AddedStudent(string Name, string MiddleName, string SurName)//запись после добавления студента
+        public IActionResult AddedStudent(string StudentsName, string StudentsMiddleName, string StudentsSurName)//запись после добавления студента
         {
             Students student = new Students();
-            student.StudentsName = Name;
-            student.StudentsMiddleName = MiddleName;
-            student.StudentsSurName = SurName;
-            _context.Students.Add(student);
-            _context.SaveChanges();
-            return View("Index");
+            student.StudentsName = StudentsName;
+            student.StudentsMiddleName = StudentsMiddleName;
+            student.StudentsSurName = StudentsSurName;
+            _context.Students.AddAsync(student);
+           _context.SaveChangesAsync();
+            return View("Index", GetStudWCourses());
         }
 
         public IActionResult AddCourse()
@@ -49,11 +49,11 @@ namespace StudentReg.Controllers
             return View();
         }
 
-        public IActionResult AddedCourse(string CourseName)//запись в базу после добавления курса
+        public IActionResult AddedCourse(string CoursesName)//запись в базу после добавления курса
         {
-            if (!_context.Courses.Any(a => a.CoursesName==CourseName))
+            if (!_context.Courses.Any(a => a.CoursesName== CoursesName))
             {
-                _context.Courses.Add(new Courses { CoursesName = CourseName });
+                _context.Courses.Add(new Courses { CoursesName = CoursesName });
                 _context.SaveChanges();
             }
             return View("Index", GetStudWCourses());

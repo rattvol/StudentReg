@@ -10,7 +10,7 @@ namespace StudentReg.Models
         public string StudentsMiddleName { get; set; }
         public string StudentsSurName { get; set; }
 
-        public virtual List<Registration> Registrations {get; set;}
+       // public virtual List<Registration> Registrations {get; set;}
     }
     public class StudWithCourse
     {

@@ -9,7 +9,7 @@ namespace StudentReg.Models
         public int CoursesId { get; set; }
         public int Id { get; set; }
 
-        public virtual Students Students { get; set; }
-        public virtual Courses Courses { get; set; }
+        //public virtual Students Students { get; set; }
+        //public virtual Courses Courses { get; set; }
     }
 }

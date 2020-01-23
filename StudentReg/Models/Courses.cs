@@ -8,6 +8,6 @@ namespace StudentReg.Models
         public int CoursesID { get; set; }
         public string CoursesName { get; set; }
 
-        public virtual List<Registration> Registrations { get; set; }
+        //public virtual List<Registration> Registrations { get; set; }
     }
 }
